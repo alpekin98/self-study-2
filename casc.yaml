@@ -1,0 +1,27 @@
+jenkins:
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: admin
+          password: admin
+unclassified:
+  location:
+    url: http://localhost:8080/
+jobs:
+  - script: >
+      pipelineJob('self-study-cpp') {
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url('https://github.com/alpekin98/self-study-2.git')
+                }
+                branch('*/main')
+              }
+            }
+            lightweight()
+          }
+        }
+      }
