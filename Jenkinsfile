@@ -4,6 +4,7 @@ pipeline {
         stage("build"){
             steps{
                 echo "build"
+                sh "which make"
                 sh "apt-get install make"
                 sh "make"
             }
