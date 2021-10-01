@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-cpp
+    privileged: true
+    user: root
     ports:
       - 8081:80
   jenkins:
