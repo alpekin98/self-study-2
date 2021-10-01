@@ -4,7 +4,7 @@ pipeline {
         stage("build"){
             steps{
                 echo "build"
-                make
+                sh "make"
             }
         }
         stage("packaging (debian)"){
