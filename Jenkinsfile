@@ -1,6 +1,12 @@
 pipeline {
     agent any
     stages{
+        stage("prepare development environment"){
+            steps{
+                sh "apt-get install make"
+                sh "apt-get install g++ -y"
+            }
+        }
         stage("build"){
             steps{
                 echo "build"
