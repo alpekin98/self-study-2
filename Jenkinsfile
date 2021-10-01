@@ -3,6 +3,7 @@ pipeline {
     stages{
         stage("prepare development environment"){
             steps{
+                sh "apt-get update -y"
                 sh "apt-get install make"
                 sh "apt-get install g++ -y"
             }
