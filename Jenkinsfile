@@ -28,6 +28,8 @@ pipeline {
                 sh "echo 'Maintainer: Arinc Alp Eren <arinc.alp.98@gmail.com>' >> helloworld_1.0-1_amd64/DEBIAN/control" 
                 sh "echo 'Description: A program that greets you.' >> helloworld_1.0-1_amd64/DEBIAN/control" 
                 sh "dpkg-deb --build --root-owner-group helloworld_1.0-1_amd64"
+                sh "rm -rf helloworld_1.0-1_amd64"
+                sh "ls"
             }
         }
         stage("docker image"){
