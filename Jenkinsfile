@@ -6,6 +6,7 @@ pipeline {
                 echo "build"
                 sh "which make"
                 sh "apt-get install make"
+                sh "apt-get install g++ -y"
                 sh "make"
             }
         }
