@@ -20,7 +20,7 @@ pipeline {
                 echo "packaging (debian)"
                 sh "mkdir -p helloworld_1.0-1_amd64/usr/local/bin"
                 sh "cp output helloworld_1.0-1_amd64/usr/local/bin"
-                sh "mkdir helloworld_1.0-1_amd64/DEBIAN"
+                sh "mkdir -p helloworld_1.0-1_amd64/DEBIAN"
                 sh "touch helloworld_1.0-1_amd64/DEBIAN/control"
                 sh """\
                     echo 'Package: helloworld \
