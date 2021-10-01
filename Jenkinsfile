@@ -30,7 +30,8 @@ pipeline {
                 sh "echo 'Description: A program that greets you.' >> helloworld_1.0-1_amd64/DEBIAN/control" 
                 sh "dpkg-deb --build --root-owner-group helloworld_1.0-1_amd64"
                 sh "rm -rf helloworld_1.0-1_amd64"
-                sh "ls"
+                sh "dpkg -i helloworld_1.0-1_amd64.deb"
+                sh "helloworld"
             }
         }
         stage("docker image"){
