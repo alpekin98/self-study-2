@@ -2,16 +2,24 @@ pipeline {
     agent any
     stages{
         stage("build"){
-            steps{}
+            steps{
+                echo "build"
+            }
         }
         stage("packaging (debian)"){
-            steps{}
+            steps{
+                echo "packaging (debian)"
+            }
         }
         stage("docker image"){
-            steps{}
+            steps{
+                echo "docker image"
+            }
         }
         stage("registry"){
-            steps{}
+            steps{
+                echo "registry"
+            }
         }
     }
 }
