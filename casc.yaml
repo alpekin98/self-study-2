@@ -25,6 +25,7 @@ jobs:
             scm {
               git {
                 remote {
+                  credentialsId: 'dbd46277-3341-4268-8a73-307d816cfcf5',
                   url('https://github.com/alpekin98/self-study-2.git')
                 }
                 branch('*/main')
