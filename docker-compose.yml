@@ -1,13 +1,15 @@
 services:
-  cpp:
-    image: cpp
-    build:
-      context: .
-      dockerfile: Dockerfile-cpp
-    privileged: true
-    user: root
+  docker-registry:
+    container_name: docker-registry
+    image: registry:2
     ports:
-      - 8081:80
+      - 5000:5000
+    restart: always
+    volumes:
+      - ./volume:/var/lib/registry
+    networks:
+      mynet:
+        ipv4_address: 192.168.55.11
   jenkins:
     image: jenkins_image
     build:
