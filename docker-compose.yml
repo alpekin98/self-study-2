@@ -1,11 +1,11 @@
 services:
-  # cpp:
-  #   image: node_test
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile-node
-  #   ports:
-  #     - 8081:80
+  cpp:
+    image: cpp
+    build:
+      context: .
+      dockerfile: Dockerfile-cpp
+    ports:
+      - 8081:80
   jenkins:
     image: jenkins_image
     build:
