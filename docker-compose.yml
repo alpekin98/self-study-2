@@ -14,6 +14,7 @@ services:
     image: jenkins_image
     volumes:
       - ./volume_jenkins:/var/lib/docker
+      - /var/run/docker.sock:/var/run/docker.sock
     build:
       context: .
       dockerfile: Dockerfile-jenkins
