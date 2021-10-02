@@ -3,15 +3,11 @@ pipeline {
     stages{
         stage("prepare development environment"){
             steps{
-                sh "apt-get update -y"
-                sh "apt-get install make"
-                sh "apt-get install g++ -y"
             }
         }
         stage("build"){
             steps{
                 echo "build"
-                sh "which make"
                 sh "make"
             }
         }
@@ -30,6 +26,8 @@ pipeline {
                 sh "echo 'Description: A program that greets you.' >> helloworld_1.0-1_amd64/DEBIAN/control" 
                 sh "dpkg-deb --build --root-owner-group helloworld_1.0-1_amd64"
                 sh "rm -rf helloworld_1.0-1_amd64"
+                sh "rm helloworld_1.0-1_amd64.deb"
+                sh "make clean"
                 sh "dpkg -i helloworld_1.0-1_amd64.deb"
                 sh "helloworld"
             }
