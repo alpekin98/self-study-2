@@ -31,6 +31,16 @@ pipeline {
         stage("docker image"){
             steps{
                 echo "docker image"
+                sh 'service docker start'
+                sh 'touch Dockerfile'
+                sh 'echo "FROM ubuntu:latest" > Dockerfile'
+                sh 'echo "USER root" > Dockerfile'
+                sh 'echo "WORKDIR /home" > Dockerfile'
+                sh 'echo "COPY helloworld_1.0-1_amd64.deb /home/helloworld_1.0-1_amd64.deb" > Dockerfile'
+                sh 'echo "RUN dpkg -i helloworld_1.0-1_amd64.deb" > Dockerfile'
+                sh 'echo "RUN helloworld" > Dockerfile'
+                sh 'docker build -t helloworld_image .'
+                sh 'docker images'
             }
         }
         stage("registry"){
