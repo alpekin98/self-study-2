@@ -32,11 +32,13 @@ pipeline {
             steps{
                 echo "docker image"
                 sh 'service docker status'
-                try {
-                    sh 'service docker start'
-                } catch (error) {
-                    echo error
-                    echo 'service started'
+                script {
+                    try {
+                        sh 'service docker start'
+                    } catch (error) {
+                        echo error
+                        echo 'service started'
+                    }
                 }
                 sh 'service docker status'
                 sh 'touch Dockerfile'
