@@ -1,5 +1,7 @@
 git clone https://github.com/alpekin98/self-study-2.git
+
 cd self-study-cpp
+
 docker-compose up
 
 Jenkins http://192.168.55.10:8080/ adresinde açılmış olacaktır.
