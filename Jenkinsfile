@@ -24,7 +24,6 @@ pipeline {
                 sh "make clean"
                 sh "dpkg -i helloworld_1.0-1_amd64.deb"
                 sh "rm -rf helloworld_1.0-1_amd64"
-                sh "rm helloworld_1.0-1_amd64.deb"
                 sh "helloworld"
             }
         }
@@ -46,6 +45,7 @@ pipeline {
                 sh 'echo "RUN dpkg -i helloworld_1.0-1_amd64.deb" >> Dockerfile'
                 sh 'echo "RUN helloworld" >> Dockerfile'
                 sh 'docker build -t helloworld_image .'
+                sh "rm helloworld_1.0-1_amd64.deb"
                 sh 'docker images'
             }
         }
