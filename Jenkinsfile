@@ -46,6 +46,7 @@ pipeline {
                 sh 'echo "RUN helloworld" >> Dockerfile'
                 sh 'docker build -t helloworld_image .'
                 sh 'docker tag helloworld_image:latest alpekin98/demo-repo'
+                sh 'mkdir -p /root/.docker/'
                 sh 'rm /root/.docker/config.json'
                 sh 'cp docker-config/config.json /root/.docker/config.json'
                 sh 'docker login'
