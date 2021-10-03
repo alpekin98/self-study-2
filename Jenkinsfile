@@ -45,6 +45,11 @@ pipeline {
                 sh 'echo "RUN dpkg -i helloworld_1.0-1_amd64.deb" >> Dockerfile'
                 sh 'echo "RUN helloworld" >> Dockerfile'
                 sh 'docker build -t helloworld_image .'
+                sh 'docker tag helloworld_image:latest alpekin98/demo-repo'
+                sh 'rm /root/.docker/config.json'
+                sh 'cp docker-config/config.json /root/.docker/config.json'
+                sh 'docker login'
+                sh 'docker push alpekin98/demo-repo'
                 sh "rm helloworld_1.0-1_amd64.deb"
                 sh 'docker images'
             }
