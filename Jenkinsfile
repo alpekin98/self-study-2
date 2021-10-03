@@ -31,9 +31,13 @@ pipeline {
         stage("docker image"){
             steps{
                 echo "docker image"
-                sh 'service docker status'
-                sh 'service docker start'
-                sh 'service docker status'
+                script {
+                    try{
+                        sh 'service docker start'
+                    } catch (error) {
+                        echo 'Error: ' + error.getMessage()
+                    }
+                }
                 sh 'touch Dockerfile'
                 sh 'echo "FROM ubuntu:latest" > Dockerfile'
                 sh 'echo "USER root" > Dockerfile'
