@@ -25,3 +25,9 @@ jobs:
           }
         }
       }
+      freeStyleJob('dependency-deb-package') {
+        steps {
+            echo "dependency-deb-package"
+            sh "echo 'Testing dependency-deb-package'"
+        }
+      }
