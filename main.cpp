@@ -1,7 +1,6 @@
-#include <iostream>
-
-using namespace std;
+#include "says_hello_world.h"
 
 int main(){
-	cout << "Hello World!" << endl;
+	SaysHelloWorld shw;
+	shw.sayHelloWorld();
 }
