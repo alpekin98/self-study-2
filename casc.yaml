@@ -25,11 +25,3 @@ jobs:
           }
         }
       }
-      job('dependency-deb-package') {
-        definition{
-          steps {
-            echo "dependency-deb-package"
-            sh "echo 'Testing dependency-deb-package'"
-          }
-        }
-      }
