@@ -29,5 +29,3 @@ make_debian_package:
 	echo 'Depends: nano , curl' >> helloworld_1.0-1_amd64/DEBIAN/control
 	dpkg-deb --build --root-owner-group helloworld_1.0-1_amd64
 	make clean
-	# apt-get install -f ./helloworld_1.0-1_amd64.deb -y
-	# helloworld
