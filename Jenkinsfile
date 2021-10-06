@@ -17,7 +17,6 @@ pipeline {
             steps{
                 echo "deploying package to Artifactory"
                 sh 'curl -u arinc.alp.98@gmail.com:AP7y8ekbLckRdzX7RZYYFbU717x -XPUT "https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/helloworld_1.0-1_amd64.deb;deb.distribution=latest;deb.component=main;deb.architecture=amd64" -T ./helloworld_1.0-1_amd64.deb'
-                sh 'rm helloworld_1.0-1_amd64.deb'
             }
         }
         stage("docker image"){
