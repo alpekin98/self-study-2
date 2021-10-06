@@ -26,6 +26,6 @@ make_debian_package:
 	echo 'Architecture: amd64' >> helloworld_1.0-1_amd64/DEBIAN/control
 	echo 'Maintainer: Arinc Alp Eren <arinc.alp.98@gmail.com>' >> helloworld_1.0-1_amd64/DEBIAN/control
 	echo 'Description: A program that greets you.' >> helloworld_1.0-1_amd64/DEBIAN/control
-	echo 'Depends: nano , curl' >> helloworld_1.0-1_amd64/DEBIAN/control
+	# echo 'Depends: nano , curl' >> helloworld_1.0-1_amd64/DEBIAN/control
 	dpkg-deb --build --root-owner-group helloworld_1.0-1_amd64
 	make clean
