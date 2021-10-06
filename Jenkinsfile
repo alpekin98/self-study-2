@@ -29,7 +29,7 @@ pipeline {
                         echo 'Error: ' + error.getMessage()
                     }
                 }
-                sh 'rm Dockerfile'
+                sh 'rm -f Dockerfile'
                 sh 'touch Dockerfile'
                 sh 'echo "FROM ubuntu:latest" >> Dockerfile'
                 sh 'echo "USER root" >> Dockerfile'
