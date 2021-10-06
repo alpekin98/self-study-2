@@ -37,7 +37,7 @@ pipeline {
                 // sh 'sh -c "echo \'deb https://alpekin98.jfrog.io/artifactory/my-test-debian latest main\' >> /etc/apt/sources.list" >> Dockerfile'
                 sh 'echo "WORKDIR /home" >> Dockerfile'
                 sh 'echo "COPY helloworld_1.0-1_amd64.deb /home/helloworld_1.0-1_amd64.deb" >> Dockerfile'
-                sh 'echo "apt-get install helloworld_1.0-1_amd64.deb" >> Dockerfile'
+                sh 'echo "RUN apt-get install helloworld_1.0-1_amd64.deb" >> Dockerfile'
                 sh 'echo "CMD helloworld" >> Dockerfile'
                 sh 'docker build -t helloworld_image .'
                 sh 'docker tag helloworld_image:latest alpekin98/demo-repo'
