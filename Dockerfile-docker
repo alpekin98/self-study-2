@@ -1,9 +1,0 @@
-FROM:docker:latest
-
-USER root
-
-COPY helloworld_1.0-1_amd64.deb /helloworld_1.0-1_amd64.deb
-RUN dpkg -i helloworld_1.0-1_amd64.deb
-RUN rm helloworld_1.0-1_amd64.deb
-RUN which helloworld
-RUN helloworld
