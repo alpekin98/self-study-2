@@ -13,6 +13,7 @@ clean:
 	rm -rf helloworld_1.0-1_amd64
 
 make_debian_package:
+	ls
 	rm -rf helloworld_1.0-1_amd64
 	mkdir -p helloworld_1.0-1_amd64/usr/local/bin
 	cp helloworld helloworld_1.0-1_amd64/usr/local/bin
