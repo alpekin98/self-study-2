@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        dockerfile true
+    }
     stages{
         stage("build"){
             steps{
@@ -33,7 +35,6 @@ pipeline {
                 sh 'touch Dockerfile'
                 sh 'echo "FROM ubuntu:latest" >> Dockerfile'
                 sh 'echo "USER root" >> Dockerfile'
-                // sh 'sh -c "echo \'deb https://alpekin98.jfrog.io/artifactory/my-test-debian latest main\' >> /etc/apt/sources.list" >> Dockerfile'
                 sh 'echo "WORKDIR /home" >> Dockerfile'
                 sh 'echo "COPY helloworld_1.0-1_amd64.deb /home/helloworld_1.0-1_amd64.deb" >> Dockerfile'
                 sh 'echo "RUN apt-get install -f ./helloworld_1.0-1_amd64.deb -y" >> Dockerfile'
@@ -44,13 +45,13 @@ pipeline {
                 sh 'cp docker-config/config.json /root/.docker/config.json'
                 sh 'docker login'
                 sh 'docker push alpekin98/demo-repo'
-                sh "rm helloworld_1.0-1_amd64.deb"
+                sh 'rm helloworld_1.0-1_amd64.deb'
                 sh 'docker images'
             }
         }
         stage("registry"){
             steps{
-                echo "registry"
+                echo 'registry'
             }
         }
     }
