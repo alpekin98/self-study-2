@@ -9,17 +9,13 @@ pipeline {
         stage("build"){
             steps{
                 echo "build"
-                sh "echo $PWD"
-                sh "make"
-                sh "echo $PWD"
+                sh "make main.o"
             }
         }
         stage("packaging (debian)"){
             steps{
-                sh "echo $PWD"
                 echo "packaging (debian)"
                 sh "make make_debian_package"
-                sh "echo $PWD"
             }
         }
         stage("deploying package"){
