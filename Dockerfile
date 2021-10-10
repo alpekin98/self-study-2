@@ -6,5 +6,5 @@ LABEL Name="compile-dockerfile"
 
 RUN apk update
 RUN apk add make
-RUN apk add build-base -y
+RUN apk add build-base
 RUN apk update
