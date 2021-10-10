@@ -9,13 +9,17 @@ pipeline {
         stage("build"){
             steps{
                 echo "build"
+                sh "ls"
                 sh "make"
+                sh "ls"
             }
         }
         stage("packaging (debian)"){
             steps{
+                sh "ls"
                 echo "packaging (debian)"
                 sh "make make_debian_package"
+                sh "ls"
             }
         }
         stage("deploying package"){
@@ -34,6 +38,7 @@ pipeline {
                         echo 'Error: ' + error.getMessage()
                     }
                 }
+                sh 'ls'
                 sh 'rm -f Dockerfile'
                 sh 'touch Dockerfile'
                 sh 'echo "FROM ubuntu:latest" >> Dockerfile'
