@@ -1,7 +1,9 @@
 pipeline {
     agent {
-        dockerfile true
-        args "--privileged"
+        dockerfile {
+            additionalBuildArgs "--privileged"
+            filename "Dockerfile"
+        }
     }
     stages{
         stage("build"){
