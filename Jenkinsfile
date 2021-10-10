@@ -1,7 +1,6 @@
 pipeline {
     agent {
         dockerfile {
-            additionalBuildArgs "--privileged"
             filename "Dockerfile"
         }
     }
