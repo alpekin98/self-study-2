@@ -5,17 +5,14 @@ CC=gcc
 LINK=gcc
 
 output: main.o
-	g++ main.o -o helloworld
-
-main.o: main.cpp
 	g++ -c main.cpp
+	g++ main.o -o helloworld
 
 clean:
 	rm *.o helloworld
 	rm -rf helloworld_1.0-1_amd64
 
 make_debian_package:
-	make main.o
 	rm -rf helloworld_1.0-1_amd64
 	mkdir -p helloworld_1.0-1_amd64/usr/local/bin
 	cp helloworld helloworld_1.0-1_amd64/usr/local/bin

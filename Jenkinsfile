@@ -9,7 +9,7 @@ pipeline {
         stage("build"){
             steps{
                 echo "build"
-                sh "make main.o"
+                sh "make output"
             }
         }
         stage("packaging (debian)"){
