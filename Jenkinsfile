@@ -38,6 +38,7 @@ pipeline {
                 sh 'touch Dockerfile'
                 sh 'echo "FROM ubuntu:latest" >> Dockerfile'
                 sh 'echo "USER root" >> Dockerfile'
+                sh 'echo "RUN apt-get update" >> Dockerfile' 
                 sh 'echo "RUN apt-get install curl -y" >> Dockerfile' 
                 sh 'echo "WORKDIR /home" >> Dockerfile'
                 sh 'echo "RUN curl https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/helloworld_1.0-1_amd64.deb --output ./helloworld_1.0-1_amd64.deb" >> Dockerfile'
