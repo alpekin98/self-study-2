@@ -14,17 +14,17 @@ services:
     networks:
       mynet:
         ipv4_address: 192.168.55.10
-  # docker-registry:
-  #   container_name: docker-registry
-  #   image: alpekin98/demo-repo
-  #   ports:
-  #     - 5000:5000
-  #   restart: always
-  #   volumes:
-  #     - ./volume:/var/lib/registry
-  #   networks:
-  #     mynet:
-  #       ipv4_address: 192.168.55.11
+  docker-registry:
+    container_name: docker-registry
+    image: alpekin98/demo-repo
+    ports:
+      - 5000:5000
+    restart: always
+    volumes:
+      - ./volume:/var/lib/registry
+    networks:
+      mynet:
+        ipv4_address: 192.168.55.11
 networks:
   mynet:
     driver: bridge
