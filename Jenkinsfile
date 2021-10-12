@@ -44,6 +44,8 @@ pipeline {
                 sh 'cp docker-config/config.json /root/.docker/config.json'
                 sh 'docker login'
                 sh 'docker push alpekin98/demo-repo'
+                sh 'docker rmi alpekin98/demo-repo'
+                sh 'docker rmi helloworld_image'
                 sh 'rm helloworld_1.0-1_amd64.deb'
                 sh 'docker images'
             }
