@@ -12,16 +12,10 @@ pipeline {
                 sh "make output"
             }
         }
-        stage("packaging (debian)"){
+        stage("packaging (debian) & deploying"){
             steps{
                 echo "packaging (debian)"
                 sh "make make_debian_package"
-            }
-        }
-        stage("deploying package"){
-            steps{
-                echo "deploying package to Artifactory"
-                sh 'curl -u arinc.alp.98@gmail.com:AP7y8ekbLckRdzX7RZYYFbU717x -XPUT "https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/helloworld_1.0-1_amd64.deb;deb.distribution=latest;deb.component=main;deb.architecture=amd64" -T ./helloworld_1.0-1_amd64.deb'
             }
         }
         stage("docker image"){
@@ -42,9 +36,7 @@ pipeline {
                 sh 'echo "RUN apt-get install curl -y" >> Dockerfile' 
                 sh 'echo "WORKDIR /home" >> Dockerfile'
                 sh 'echo "RUN curl https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/helloworld_1.0-1_amd64.deb --output ./helloworld_1.0-1_amd64.deb" >> Dockerfile'
-                // sh 'echo "COPY helloworld_1.0-1_amd64.deb /home/helloworld_1.0-1_amd64.deb" >> Dockerfile'
                 sh 'echo "RUN apt-get install ./helloworld_1.0-1_amd64.deb" >> Dockerfile'
-                // sh 'echo "RUN dpkg -i helloworld_1.0-1_amd64.deb" >> Dockerfile'
                 sh 'echo "CMD helloworld" >> Dockerfile'
                 sh 'docker build -t helloworld_image .'
                 sh 'docker tag helloworld_image:latest alpekin98/demo-repo'
