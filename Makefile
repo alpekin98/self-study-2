@@ -10,24 +10,24 @@ output:
 
 clean:
 	rm *.o helloworld
-	rm -rf helloworld_1.0-1_amd64
+	rm -rf helloworld_1.0-1_musl-linux-amd64
 
 make_debian_package:
 	make output
-	rm -rf helloworld_1.0-1_amd64
+	rm -rf helloworld_1.0-1_musl-linux-amd64
 	mkdir -p helloworld_1.0-1_musl-linux-amd64/usr/local/bin
-	cp helloworld helloworld_1.0-1_amd64/usr/local/bin
-	mkdir -p helloworld_1.0-1_amd64/DEBIAN
-	touch helloworld_1.0-1_amd64/DEBIAN/control
-	echo 'Package: helloworld' >> helloworld_1.0-1_amd64/DEBIAN/control
-	echo 'Version: 1.0' >> helloworld_1.0-1_amd64/DEBIAN/control
-	echo 'Architecture: musl-linux-amd64' >> helloworld_1.0-1_amd64/DEBIAN/control
-	echo 'Maintainer: Arinc Alp Eren <arinc.alp.98@gmail.com>' >> helloworld_1.0-1_amd64/DEBIAN/control
-	echo 'Description: A program that greets you.' >> helloworld_1.0-1_amd64/DEBIAN/control
-	# echo 'Depends: nano , curl' >> helloworld_1.0-1_amd64/DEBIAN/control
-	dpkg-deb --build --root-owner-group helloworld_1.0-1_amd64
-	# apt-get install ./helloworld_1.0-1_amd64.deb
-	dpkg -i helloworld_1.0-1_amd64.deb
+	cp helloworld helloworld_1.0-1_musl-linux-amd64/usr/local/bin
+	mkdir -p helloworld_1.0-1_musl-linux-amd64/DEBIAN
+	touch helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
+	echo 'Package: helloworld' >> helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
+	echo 'Version: 1.0' >> helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
+	echo 'Architecture: musl-linux-musl-linux-amd64' >> helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
+	echo 'Maintainer: Arinc Alp Eren <arinc.alp.98@gmail.com>' >> helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
+	echo 'Description: A program that greets you.' >> helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
+	# echo 'Depends: nano , curl' >> helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
+	dpkg-deb --build --root-owner-group helloworld_1.0-1_musl-linux-amd64
+	# apt-get install ./helloworld_1.0-1_musl-linux-amd64.deb
+	dpkg -i helloworld_1.0-1_musl-linux-amd64.deb
 	helloworld
 	make clean
-	curl -u arinc.alp.98@gmail.com:AP7y8ekbLckRdzX7RZYYFbU717x -XPUT "https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/helloworld_1.0-1_amd64.deb;deb.distribution=latest;deb.component=main;deb.architecture=amd64" -T ./helloworld_1.0-1_amd64.deb
+	curl -u arinc.alp.98@gmail.com:AP7y8ekbLckRdzX7RZYYFbU717x -XPUT "https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/helloworld_1.0-1_musl-linux-amd64.deb;deb.distribution=latest;deb.component=main;deb.architecture=musl-linux-amd64" -T ./helloworld_1.0-1_amd64.deb
