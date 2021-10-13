@@ -15,13 +15,13 @@ clean:
 make_debian_package:
 	make output
 	rm -rf helloworld_1.0-1_amd64
-	mkdir -p helloworld_1.0-1_amd64/usr/local/bin
+	mkdir -p helloworld_1.0-1_musl-linux-amd64/usr/local/bin
 	cp helloworld helloworld_1.0-1_amd64/usr/local/bin
 	mkdir -p helloworld_1.0-1_amd64/DEBIAN
 	touch helloworld_1.0-1_amd64/DEBIAN/control
 	echo 'Package: helloworld' >> helloworld_1.0-1_amd64/DEBIAN/control
 	echo 'Version: 1.0' >> helloworld_1.0-1_amd64/DEBIAN/control
-	echo 'Architecture: amd64' >> helloworld_1.0-1_amd64/DEBIAN/control
+	echo 'Architecture: musl-linux-amd64' >> helloworld_1.0-1_amd64/DEBIAN/control
 	echo 'Maintainer: Arinc Alp Eren <arinc.alp.98@gmail.com>' >> helloworld_1.0-1_amd64/DEBIAN/control
 	echo 'Description: A program that greets you.' >> helloworld_1.0-1_amd64/DEBIAN/control
 	# echo 'Depends: nano , curl' >> helloworld_1.0-1_amd64/DEBIAN/control
