@@ -21,7 +21,7 @@ make_debian_package:
 	touch helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
 	echo 'Package: helloworld' >> helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
 	echo 'Version: 1.0' >> helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
-	echo 'Architecture: musl-linux-musl-linux-amd64' >> helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
+	echo 'Architecture: musl-linux-amd64' >> helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
 	echo 'Maintainer: Arinc Alp Eren <arinc.alp.98@gmail.com>' >> helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
 	echo 'Description: A program that greets you.' >> helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
 	# echo 'Depends: nano , curl' >> helloworld_1.0-1_musl-linux-amd64/DEBIAN/control
