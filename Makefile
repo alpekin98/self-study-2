@@ -26,5 +26,7 @@ make_debian_package:
 	echo 'Description: A program that greets you.' >> helloworld_1.0-1_amd64/DEBIAN/control
 	# echo 'Depends: nano , curl' >> helloworld_1.0-1_amd64/DEBIAN/control
 	dpkg-deb --build --root-owner-group helloworld_1.0-1_amd64
+	apt-get install ./helloworld_1.0-1_amd64.deb
+	helloworld
 	make clean
 	curl -u arinc.alp.98@gmail.com:AP7y8ekbLckRdzX7RZYYFbU717x -XPUT "https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/helloworld_1.0-1_amd64.deb;deb.distribution=latest;deb.component=main;deb.architecture=amd64" -T ./helloworld_1.0-1_amd64.deb
