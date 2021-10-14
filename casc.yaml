@@ -8,6 +8,14 @@ jenkins:
 unclassified:
   location:
     url: http://192.168.55.10:8080/
+  globalLibraries:
+    libraries:
+      - name: "jenkins-shared-library-sample"
+        retriever:
+          modernSCM:
+            scm:
+              git:
+                remote: "https://github.com/alpekin98/jenkins-shared-library-sample"
 jobs:
   - script: >
       pipelineJob('self-study-cpp') {

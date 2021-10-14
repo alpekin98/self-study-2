@@ -1,3 +1,6 @@
+@Library('shared-library') _
+def config = [name: 'Can']
+
 pipeline {
     agent {
         dockerfile {
@@ -16,6 +19,11 @@ pipeline {
             steps{
                 echo "packaging (debian)"
                 sh "make make_debian_package"
+            }
+        }
+        stage("jenkins shared library call"){
+            steps{
+                helloWorld(config)
             }
         }
         stage("docker image"){
