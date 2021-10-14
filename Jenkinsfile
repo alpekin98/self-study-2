@@ -1,4 +1,4 @@
-@Library('jenkins-shared-library-sample@1.0') _
+@Library('jenkins-shared-library-sample@main') _
 def config = [name: 'Can']
 
 pipeline {
