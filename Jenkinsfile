@@ -10,11 +10,13 @@ pipeline {
     stages{
         stage("Importing libraries"){
             steps {
-                try {
-                    library 'stage-hooks-notexists@main'
-                } catch (error){
-                    echo "stage-hooks-notexists@main not found."
-                    echo 'Error: ' + error.getMessage()
+                script {
+                    try {
+                        library 'stage-hooks-notexists@main'
+                    } catch (error){
+                        echo "stage-hooks-notexists@main not found."
+                        echo 'Error: ' + error.getMessage()
+                    }
                 }
             }
         }
