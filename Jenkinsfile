@@ -1,10 +1,4 @@
 @Library('stage-hooks@main') _
-try {
-    @Library('stage-hooks-notexists@main') _
-} catch (error){
-    echo "stage-hooks-notexists@main not found."
-    echo 'Error: ' + error.getMessage()
-}
 
 pipeline {
     agent {
@@ -14,6 +8,16 @@ pipeline {
         }
     }
     stages{
+        stage("Importing libraries"){
+            steps {
+                try {
+                    library 'stage-hooks-notexists@main'
+                } catch (error){
+                    echo "stage-hooks-notexists@main not found."
+                    echo 'Error: ' + error.getMessage()
+                }
+            }
+        }
         stage("Pre-Build Stage"){
             steps {
                 preBuild()
