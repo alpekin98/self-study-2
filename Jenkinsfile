@@ -1,4 +1,10 @@
 @Library('stage-hooks@main') _
+try {
+    @Library('stage-hooks-notexists@main') _
+} catch (error){
+    echo "stage-hooks-notexists@main not found."
+    echo 'Error: ' + error.getMessage()
+}
 
 pipeline {
     agent {
