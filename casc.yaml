@@ -10,7 +10,7 @@ unclassified:
     url: http://192.168.55.10:8080/
   globalLibraries:
     libraries:
-      - name: "jenkins-shared-library-sample"
+      - name: "stage-hooks"
         retriever:
           modernSCM:
             scm:

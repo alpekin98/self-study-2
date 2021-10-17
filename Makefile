@@ -4,7 +4,7 @@ CC=gcc
 # Specify linker
 LINK=gcc
 
-output:
+build:
 	g++ -c main.cpp
 	g++ main.o -o helloworld
 
@@ -13,7 +13,7 @@ clean:
 	rm -rf helloworld_1.0-1_amd64
 
 make_debian_package:
-	make output
+	make build
 	rm -rf helloworld_1.0-1_amd64
 	mkdir -p helloworld_1.0-1_amd64/usr/local/bin
 	cp helloworld helloworld_1.0-1_amd64/usr/local/bin

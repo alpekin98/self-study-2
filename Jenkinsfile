@@ -1,5 +1,4 @@
-@Library('jenkins-shared-library-sample@main') _
-def config = [name: 'Can']
+@Library('stage-hooks@main') _
 
 pipeline {
     agent {
@@ -9,21 +8,51 @@ pipeline {
         }
     }
     stages{
-        stage("build"){
-            steps{
-                echo "build"
-                sh "make output"
+        stage("Pre-Build Stage"){
+            steps {
+                preBuild()
             }
         }
-        stage("packaging (debian) & deploying"){
+        stage("Build"){
+            steps {
+                echo "Build stage started."
+                sh "make build"
+            }
+        }
+        stage("Post-Build Stage"){
+            steps {
+                postBuild()
+            }
+        }
+        stage("Pre-Test Stage"){
+            steps {
+                preTest()
+            }
+        }
+        stage("Test Stage"){
+            steps {
+                echo "make test"
+            }
+        }
+        stage("Post-Test Stage"){
+            steps {
+                postTest()
+            }
+        }
+        stage("Pre-Dist Stage"){
+            steps {
+                preDist()
+            }
+        }
+        stage("Dist Stage"){
             steps{
                 echo "packaging (debian)"
                 sh "make make_debian_package"
             }
         }
-        stage("jenkins shared library call"){
-            steps{
-                helloWorld(config)
+        stage("Post-Dist Stage"){
+            steps {
+                postDist()
             }
         }
         stage("docker image"){
@@ -56,11 +85,6 @@ pipeline {
                 sh 'docker rmi helloworld_image'
                 sh 'rm helloworld_1.0-1_amd64.deb'
                 sh 'docker images'
-            }
-        }
-        stage("registry"){
-            steps{
-                echo 'registry'
             }
         }
     }
