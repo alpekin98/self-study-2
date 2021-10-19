@@ -13,7 +13,8 @@ RUN apk add gtest-dev
 RUN apk add cmake
 RUN apk add git
 RUN apk update
-RUN git clone -q https://github.com/google/googletest.git /googletest && mkdir -p /googletest/build && cd /googletest/build && cmake .. && make && make install && cp *.a /usr/lib && cd / && rm -rf /googletest
+RUN git clone -q https://github.com/google/googletest.git /googletest && mkdir -p /googletest/build && cd /googletest/build && cmake .. && make && make install && cd / && rm -rf /googletest
+RUN cp /usr/local/lib/*.a /usr/lib/
 # WORKDIR /usr/src/gtest
 # RUN cmake CMakeLists.txt
 # RUN make
