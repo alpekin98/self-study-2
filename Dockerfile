@@ -16,3 +16,5 @@ RUN apk update
 # RUN cmake CMakeLists.txt
 # RUN make
 # RUN ["cp",  "*.a", "/usr/lib"]
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]
