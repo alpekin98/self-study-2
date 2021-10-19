@@ -8,9 +8,11 @@ class SaysHelloWorld {
 		void sayHelloWorld(){
 			std::cout << "I Say Hello World!" << std::endl;
 		}
-		void printRandomNumber(){
+		int printRandomNumber(){
 			srand (time(NULL));
-			std::cout << "Random Number: " << rand() % 10 + 1 << std::endl;
+			int randomNumber = rand() % 10 + 1;
+			std::cout << "Random Number: " << randomNumber << std::endl;
+			return randomNumber;
 		}
 };
 
