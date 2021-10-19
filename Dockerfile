@@ -12,7 +12,7 @@ RUN apk add curl
 RUN apk add gtest-dev
 RUN apk add cmake
 RUN apk update
-WORKDIR /usr/src/gtest
-RUN cmake CMakeLists.txt
-RUN make
-RUN ["cp",  "*.a", "/usr/lib"]
+# WORKDIR /usr/src/gtest
+# RUN cmake CMakeLists.txt
+# RUN make
+# RUN ["cp",  "*.a", "/usr/lib"]
