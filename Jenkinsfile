@@ -43,9 +43,9 @@ pipeline {
         stage("Test Stage"){
             steps {
                 echo "Test Stage"
-                sh 'cmake CMakeLists.txt'
-                sh 'make'
-                sh './runTests'
+                // sh 'cmake CMakeLists.txt'
+                // sh 'make'
+                // sh './runTests'
             }
         }
         stage("Post-Test Stage"){
