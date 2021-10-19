@@ -15,4 +15,4 @@ RUN apk update
 WORKDIR /usr/src/gtest
 RUN cmake CMakeLists.txt
 RUN make
-RUN cp *.a /usr/lib
+RUN ["cp",  "*.a", "/usr/lib"]
