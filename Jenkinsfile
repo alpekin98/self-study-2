@@ -28,7 +28,7 @@ pipeline {
         stage("Build"){
             steps {
                 echo "Build stage started."
-                sh "make build"
+                sh "make --file=Makefile_debian build"
             }
         }
         stage("Post-Build Stage"){
@@ -59,7 +59,7 @@ pipeline {
         stage("Dist Stage"){
             steps{
                 echo "packaging (debian)"
-                sh "make make_debian_package"
+                sh "make --file=Makefile_debian make_debian_package"
             }
         }
         stage("Post-Dist Stage"){
