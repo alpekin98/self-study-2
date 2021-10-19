@@ -11,7 +11,6 @@ RUN apk add dpkg
 RUN apk add curl
 RUN apk add gtest-dev
 RUN apk add cmake
-RUN apk add googletest
 RUN apk update
 # WORKDIR /usr/src/gtest
 # RUN cmake CMakeLists.txt
