@@ -3,4 +3,5 @@
 int main(){
 	SaysHelloWorld shw;
 	shw.sayHelloWorld();
+	shw.printRandomNumber();
 }
