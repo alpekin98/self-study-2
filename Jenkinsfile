@@ -41,8 +41,14 @@ pipeline {
             }
         }
         stage("Test Stage"){
+            agent {
+                dockerfile {
+                    filename "Dockerfile_gtest"
+                }
+            }
             steps {
                 echo "Test Stage"
+                sh 'ls'
                 sh 'cmake CMakeLists.txt'
                 sh 'make'
                 sh './runTests'
@@ -70,6 +76,7 @@ pipeline {
             }
         }
         stage("docker image"){
+            // agent any
             steps{
                 echo "docker image"
                 script {

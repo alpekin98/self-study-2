@@ -1,0 +1,20 @@
+FROM ubuntu:focal
+# docker rm -f ccc && docker run -v /var/run/docker.sock:/var/run/docker.sock -d --name ccc f16f839b952b4f7bd9bbf57038ff8b077422867a && docker exec -it ccc sh
+USER root
+
+LABEL version="1.0"
+LABEL Name="gtest-dockerfile"
+
+RUN apt update
+RUN apt install -y gcc
+RUN apt install -y libgtest-dev
+RUN apt install -y curl
+RUN apt install -y dpkg
+RUN apt install -y git
+RUN apt install -y make
+RUN apt install -y cmake
+RUN apt install -y build-essential
+WORKDIR /usr/src/gtest
+RUN cmake CMakeLists.txt
+RUN make
+RUN ["cp",  "*.a", "/usr/lib"]
