@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:xenial
 # docker rm -f ccc && docker run -v /var/run/docker.sock:/var/run/docker.sock -d --name ccc f16f839b952b4f7bd9bbf57038ff8b077422867a && docker exec -it ccc sh
 USER root
 
@@ -13,7 +13,7 @@ RUN apt install -y dpkg
 RUN apt install -y git
 RUN apt install -y make
 ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=Europe/ISTANBUL
+ENV TZ=Europe/Istanbul
 RUN apt-get install -y tzdata
 RUN apt install -y cmake
 RUN apt install -y build-essential
