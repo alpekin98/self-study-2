@@ -11,6 +11,7 @@ pipeline {
             steps {
                 script {
                     try {
+                        sh 'ls -l /'
                         library 'stage-hooks-notexists@main'
                     } catch (error){
                         echo "stage-hooks-notexists@main not found."
