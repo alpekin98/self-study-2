@@ -4,6 +4,7 @@ services:
     volumes:
       - ./volume_jenkins:/var/lib/docker
       - /var/run/docker.sock:/var/run/docker.sock
+      - $(which docker):/usr/bin/docker:ro
     build:
       context: .
       dockerfile: Dockerfile-jenkins
