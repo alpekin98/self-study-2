@@ -31,7 +31,7 @@ RUN apt install -y  gcc\
                     make\
                     tzdata\
                     cmake\
-                    build-essential
+                    build-essential\
                     fakeroot
 
 WORKDIR /usr/src/gtest
