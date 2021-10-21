@@ -32,6 +32,7 @@ RUN apt install -y  gcc\
                     tzdata\
                     cmake\
                     build-essential
+                    fakeroot
 
 WORKDIR /usr/src/gtest
 RUN cmake CMakeLists.txt
