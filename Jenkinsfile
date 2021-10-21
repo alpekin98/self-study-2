@@ -13,6 +13,7 @@ pipeline {
                     try {
                         sh 'ls -l /'
                         sh 'ls -l'
+                        sh 'pwd'
                         library 'stage-hooks-notexists@main'
                     } catch (error){
                         echo "stage-hooks-notexists@main not found."
