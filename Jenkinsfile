@@ -115,7 +115,7 @@ pipeline {
                 // }
                 // sh 'rm -f Dockerfile'
                 // sh 'touch Dockerfile'
-                // sh 'echo "FROM ubuntu:latest" >> Dockerfile'
+                // sh 'echo "FROM ubuntu:xenial" >> Dockerfile'
                 // sh 'echo "USER root" >> Dockerfile'
                 // sh 'echo "RUN apt-get update" >> Dockerfile' 
                 // sh 'echo "RUN apt-get install curl -y" >> Dockerfile' 
