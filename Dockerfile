@@ -34,7 +34,7 @@ RUN apt install -y  gcc\
                     build-essential
 
 WORKDIR /usr/src/gtest
-RUN cmake CMakeLists.txt0000000
+RUN cmake CMakeLists.txt
 
 RUN make
 RUN cp *.a /usr/lib
