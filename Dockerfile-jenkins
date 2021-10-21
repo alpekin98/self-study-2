@@ -17,6 +17,72 @@ RUN apt-get install docker-ce docker-ce-cli containerd.io -y
 RUN service docker start
 ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
 ENV CASC_JENKINS_CONFIG /var/jenkins_home/casc.yaml
-COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+
+RUN echo -e '
+ant:latest\n\
+antisamy-markup-formatter:latest\n\
+build-timeout:latest\n\
+cloudbees-folder:latest\n\
+configuration-as-code:latest\n\
+credentials-binding:latest\n\
+email-ext:latest\n\
+git:latest\n\
+github-branch-source:latest\n\
+gradle:latest\n\
+ldap:latest\n\
+mailer:latest\n\
+matrix-auth:latest\n\
+pam-auth:latest\n\
+pipeline-github-lib:latest\n\
+pipeline-stage-view:latest\n\
+ssh-slaves:latest\n\
+timestamper:latest\n\
+workflow-aggregator:latest\n\
+ws-cleanup:latest\n\
+job-dsl:latest\n\
+docker-plugin:latest\n\
+docker-workflow:latest\n\
+' >  /usr/share/jenkins/ref/plugins.txt
+
+# casc.yaml Dosyası ....
+RUN echo -e '
+jenkins:\n\
+  securityRealm:\n\
+    local:\n\
+      allowsSignup: false\n\
+      users:\n\
+        - id: admin\n\
+          password: admin\n\
+unclassified:\n\
+  location:\n\
+    url: http://192.168.55.10:8080/\n\
+  globalLibraries:\n\
+    libraries:\n\
+      - name: "stage-hooks"\n\
+        retriever:\n\
+          modernSCM:\n\
+            scm:\n\
+              git:\n\
+                remote: "https://github.com/alpekin98/jenkins-shared-library-sample"\n\
+jobs:\n\
+  - script: >\n\
+      pipelineJob("self-study-cpp") {\n\
+        definition {\n\
+          cpsScm {\n\
+            scm {\n\
+              git {\n\
+                remote {\n\
+                  url("https://github.com/alpekin98/self-study-2.git")\n\
+                }\n\
+                branch("*/main")\n\
+              }\n\
+            }\n\
+            lightweight()\n\
+          }\n\
+        }\n\
+      }\n\
+\n\
+' > /var/jenkins_home/casc.yaml
+
 RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
-COPY casc.yaml /var/jenkins_home/casc.yaml
+# COPY casc.yaml /var/jenkins_home/casc.yaml

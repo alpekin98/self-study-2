@@ -25,6 +25,11 @@ pipeline {
             }
         }
         stage("Build"){
+            agent {
+                dockerfile {
+                    filename "Dockerfile_gtest"
+                }
+            }
             steps {
                 echo "Build stage started."
                 sh "make --file=Makefile_debian build"
