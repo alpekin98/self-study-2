@@ -18,7 +18,7 @@ RUN service docker start
 ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
 ENV CASC_JENKINS_CONFIG /var/jenkins_home/casc.yaml
 
-RUN echo '
+RUN echo -e '''
 ant:latest\n\
 antisamy-markup-formatter:latest\n\
 build-timeout:latest\n\
@@ -42,7 +42,7 @@ ws-cleanup:latest\n\
 job-dsl:latest\n\
 docker-plugin:latest\n\
 docker-workflow:latest\n\
-' >  /usr/share/jenkins/ref/plugins.txt
+''' >> /usr/share/jenkins/ref/plugins.txt
 
 # casc.yaml Dosyası ....
 RUN echo -e '
