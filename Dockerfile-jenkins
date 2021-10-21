@@ -18,71 +18,69 @@ RUN service docker start
 ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
 ENV CASC_JENKINS_CONFIG /var/jenkins_home/casc.yaml
 
-RUN echo -e '''
-ant:latest\n\
-antisamy-markup-formatter:latest\n\
-build-timeout:latest\n\
-cloudbees-folder:latest\n\
-configuration-as-code:latest\n\
-credentials-binding:latest\n\
-email-ext:latest\n\
-git:latest\n\
-github-branch-source:latest\n\
-gradle:latest\n\
-ldap:latest\n\
-mailer:latest\n\
-matrix-auth:latest\n\
-pam-auth:latest\n\
-pipeline-github-lib:latest\n\
-pipeline-stage-view:latest\n\
-ssh-slaves:latest\n\
-timestamper:latest\n\
-workflow-aggregator:latest\n\
-ws-cleanup:latest\n\
-job-dsl:latest\n\
-docker-plugin:latest\n\
-docker-workflow:latest\n\
-''' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'ant:latest'  >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'antisamy-markup-formatter:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'build-timeout:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'cloudbees-folder:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'configuration-as-code:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'credentials-binding:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'email-ext:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'git:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'github-branch-source:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'gradle:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'ldap:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'mailer:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'matrix-auth:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'pam-auth:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'pipeline-github-lib:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'pipeline-stage-view:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'ssh-slaves:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'timestamper:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'workflow-aggregator:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'ws-cleanup:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'job-dsl:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'docker-plugin:latest' >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'docker-workflow:latest' >> /usr/share/jenkins/ref/plugins.txt
 
-# casc.yaml Dosyası ....
-RUN echo -e '
-jenkins:\n\
-  securityRealm:\n\
-    local:\n\
-      allowsSignup: false\n\
-      users:\n\
-        - id: admin\n\
-          password: admin\n\
-unclassified:\n\
-  location:\n\
-    url: http://192.168.55.10:8080/\n\
-  globalLibraries:\n\
-    libraries:\n\
-      - name: "stage-hooks"\n\
-        retriever:\n\
-          modernSCM:\n\
-            scm:\n\
-              git:\n\
-                remote: "https://github.com/alpekin98/jenkins-shared-library-sample"\n\
-jobs:\n\
-  - script: >\n\
-      pipelineJob("self-study-cpp") {\n\
-        definition {\n\
-          cpsScm {\n\
-            scm {\n\
-              git {\n\
-                remote {\n\
-                  url("https://github.com/alpekin98/self-study-2.git")\n\
-                }\n\
-                branch("*/main")\n\
-              }\n\
-            }\n\
-            lightweight()\n\
-          }\n\
-        }\n\
-      }\n\
-\n\
-' > /var/jenkins_home/casc.yaml
+# # casc.yaml Dosyası ....
+# RUN echo -e '
+# jenkins:
+#   securityRealm:
+#     local:
+#       allowsSignup: false
+#       users:
+#         - id: admin
+#           password: admin
+# unclassified:
+#   location:
+#     url: http://192.168.55.10:8080/
+#   globalLibraries:
+#     libraries:
+#       - name: "stage-hooks"
+#         retriever:
+#           modernSCM:
+#             scm:
+#               git:
+#                 remote: "https://github.com/alpekin98/jenkins-shared-library-sample"
+# jobs:
+#   - script: >
+#       pipelineJob("self-study-cpp") {
+#         definition {
+#           cpsScm {
+#             scm {
+#               git {
+#                 remote {
+#                   url("https://github.com/alpekin98/self-study-2.git")
+#                 }
+#                 branch("*/main")
+#               }
+#             }
+#             lightweight()
+#           }
+#         }
+#       }
+
+# ' > /var/jenkins_home/casc.yaml
 
 RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
-# COPY casc.yaml /var/jenkins_home/casc.yaml
+COPY casc.yaml /var/jenkins_home/casc.yaml
