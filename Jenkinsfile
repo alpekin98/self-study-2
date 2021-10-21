@@ -122,7 +122,7 @@ pipeline {
                 sh 'echo "RUN curl https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/helloworld_1.0-1_amd64.deb --output ./helloworld_1.0-1_amd64.deb" >> Dockerfile'
                 sh 'echo "RUN apt-get install ./helloworld_1.0-1_amd64.deb" >> Dockerfile'
                 sh 'echo "CMD helloworld" >> Dockerfile'
-                // sh 'docker build -t helloworld_image .'
+                sh 'docker build -t helloworld_image .'
                 // def artifactImage = docker.build("helloworld_image")
                 sh 'docker tag helloworld_image:latest alpekin98/demo-repo'
                 sh 'mkdir -p /root/.docker/'
