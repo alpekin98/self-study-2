@@ -22,6 +22,11 @@ USER root
 LABEL version="1.0"
 LABEL Name="main-docker-agent"
 
+ARG VERSION = "1.0"
+ARG REV_NUMBER = "1"
+ARG EXECUTABLE_PATH = "/opt/cinar/amf/cnramf-coremgr"
+ARG DEB_ARCHITECTURE = "amd64"
+
 RUN apt update
 RUN apt install -y  gcc\
                     libgtest-dev\
