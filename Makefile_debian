@@ -23,7 +23,7 @@ make_debian_package:
 	touch $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}/DEBIAN/control
 	echo 'Package: $(IMAGE_NAME)' >> $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}/DEBIAN/control
 	echo 'Version: ${VERSION}' >> $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}/DEBIAN/control
-	echo 'Architecture: _${DEB_ARCHITECTURE}' >> $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}/DEBIAN/control
+	echo 'Architecture: ${DEB_ARCHITECTURE}' >> $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}/DEBIAN/control
 	echo 'Maintainer: Arinc Alp Eren <arinc.alp.98@gmail.com>' >> $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}/DEBIAN/control
 	echo 'Description: A program that greets you.' >> $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}/DEBIAN/control
 	fakeroot dpkg-deb --build $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}
