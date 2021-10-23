@@ -16,6 +16,7 @@ services:
       mynet:
         ipv4_address: 192.168.55.10
   docker-registry:
+    image: ubuntu:xenial
     container_name: docker-registry
     ports:
       - 5000:5000
