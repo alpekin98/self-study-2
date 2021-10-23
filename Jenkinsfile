@@ -43,8 +43,8 @@ pipeline {
                         def arrImageNames = params.IMAGE_NAME.split(',')
                         for(def i=0; i<arrImageNames.length;i++){
                             def imagename = arrImageNames[i]
-                            echo 'Build stage started for Image: ${imagename}'
-                            sh 'make --file=Makefile_debian build IMAGE_NAME=${imagename}'
+                            echo "Build stage started for Image: ${imagename}"
+                            sh "make --file=Makefile_debian build IMAGE_NAME=${imagename}"
                         }
                     }
                 }
@@ -85,8 +85,8 @@ pipeline {
                         def arrImageNames = params.IMAGE_NAME.split(',')
                         for(def i=0; i<arrImageNames.length;i++){
                             def imagename = arrImageNames[i]
-                            echo 'packaging for Image:${imagename}'
-                            sh 'make --file=Makefile_debian make_debian_package IMAGE_NAME=${imagename} DEB_ARCHITECTURE=${params.DEB_ARCHITECTURE} REV_NUMBER=${params.REV_NUMBER} VERSION=${params.VERSION}'
+                            echo "packaging for Image:${imagename}"
+                            sh "make --file=Makefile_debian make_debian_package IMAGE_NAME=${imagename} DEB_ARCHITECTURE=${params.DEB_ARCHITECTURE} REV_NUMBER=${params.REV_NUMBER} VERSION=${params.VERSION}"
                         }
                     }
                 }
@@ -107,15 +107,15 @@ pipeline {
                         for(def i=0; i<arrImageNames.length;i++){
                             def path = arrExePaths[i]
                             def imagename = arrImageNames[i]
-                            echo 'docker image: ${imagename}'
-                            sh 'rm -f Dockerfile-${imagename}'
-                            sh 'touch Dockerfile-${imagename}'
-                            sh 'echo "FROM ubuntu:xenial" >> Dockerfile-${imagename}'
-                            sh 'echo "USER root" >> Dockerfile-${imagename}'
-                            sh 'echo "RUN apt-get update" >> Dockerfile-${imagename}' 
-                            sh 'echo "ADD https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/${imagename}_${params.VERSION}-${params.REV_NUMBER}_${params.DEB_ARCHITECTURE}.deb ./${imagename}_${params.VERSION}-${params.REV_NUMBER}_${params.DEB_ARCHITECTURE}.deb" >> Dockerfile-${imagename}'
-                            sh 'echo "RUN apt-get install ./${imagename}_${params.VERSION}-${params.REV_NUMBER}_${params.DEB_ARCHITECTURE}.deb" >> Dockerfile-${imagename}'
-                            sh 'echo "CMD ${path}" >> Dockerfile-${imagename}'
+                            echo "docker image: ${imagename}"
+                            sh "rm -f Dockerfile-${imagename}"
+                            sh "touch Dockerfile-${imagename}"
+                            sh "echo 'FROM ubuntu:xenial' >> Dockerfile-${imagename}"
+                            sh "echo 'USER root' >> Dockerfile-${imagename}"
+                            sh "echo 'RUN apt-get update' >> Dockerfile-${imagename}"
+                            sh "echo 'ADD https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/${imagename}_${params.VERSION}-${params.REV_NUMBER}_${params.DEB_ARCHITECTURE}.deb ./${imagename}_${params.VERSION}-${params.REV_NUMBER}_${params.DEB_ARCHITECTURE}.deb' >> Dockerfile-${imagename}"
+                            sh "echo 'RUN apt-get install ./${imagename}_${params.VERSION}-${params.REV_NUMBER}_${params.DEB_ARCHITECTURE}.deb' >> Dockerfile-${imagename}"
+                            sh "echo 'CMD ${path}' >> Dockerfile-${imagename}"
                         }
                     }
                     // sh 'echo "RUN apt-get install curl -y" >> Dockerfile' 
@@ -172,8 +172,8 @@ pipeline {
                         for(def i=0; i<arrImageNames.length;i++){
                             def path = arrExePaths[i]
                             def imagename = arrImageNames[i]
-                            sh 'docker build -t ${imagename}:${params.VERSION} --build-arg argExecutablePath="${path}" -f Dockerfile-${imagename} .'
-                            sh 'docker build -t ${imagename}:latest --build-arg argExecutablePath="${path}" -f Dockerfile-${imagename} .'                        
+                            sh "docker build -t ${imagename}:${params.VERSION} -f Dockerfile-${imagename} ."
+                            sh "docker build -t ${imagename}:latest -f Dockerfile-${imagename} ."                        
                         }
                     }
                 }
@@ -186,9 +186,9 @@ pipeline {
                         def arrImageNames = params.IMAGE_NAME.split(',')
                         for(def i=0; i<arrImageNames.length;i++){
                             def imagename = arrImageNames[i]
-                            sh 'docker tag ${imagename}:${params.VERSION} ${params.DOCKER_REGISTRY}/${imagename}:${params.VERSION}'
-                            sh 'docker tag ${imagename}:latest ${params.DOCKER_REGISTRY}/${imagename}:${params.VERSION}'
-                            sh 'docker push ${params.DOCKER_REGISTRY}/${imagename}:${params.VERSION}'
+                            sh "docker tag ${imagename}:${params.VERSION} ${params.DOCKER_REGISTRY}/${imagename}:${params.VERSION}"
+                            sh "docker tag ${imagename}:latest ${params.DOCKER_REGISTRY}/${imagename}:${params.VERSION}"
+                            sh "docker push ${params.DOCKER_REGISTRY}/${imagename}:${params.VERSION}"
                         }
                     }
                 }
@@ -201,9 +201,9 @@ pipeline {
                         def arrImageNames = params.IMAGE_NAME.split(',')
                         for(def i=0; i<arrImageNames.length;i++){
                             def imagename = arrImageNames[i]
-                            sh 'docker save ${imagename}:${params.VERSION} -o ${imagename}_${params.VERSION}'
-                            sh 'scp ${imagename}_${params.VERSION} ${params.FILE_REPO_SERVER}:/var/yansilar/${imagename}/${params.VERSION}/'
-                            sh 'scp Dockerfile-${imagename} ${params.FILE_REPO_SERVER}:/var/yansilar/${imagename}/${params.VERSION}/'
+                            sh "docker save ${imagename}:${params.VERSION} -o ${imagename}_${params.VERSION}"
+                            sh "scp ${imagename}_${params.VERSION} ${params.FILE_REPO_SERVER}:/var/yansilar/${imagename}/${params.VERSION}/"
+                            sh "scp Dockerfile-${imagename} ${params.FILE_REPO_SERVER}:/var/yansilar/${imagename}/${params.VERSION}/"
                         }
                     }
                 }
