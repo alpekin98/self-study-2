@@ -135,14 +135,14 @@ pipeline {
             }
         }
         stage ('build docker image'){
-            script {
-                if(IMAGE_NAME.contains(',')){
-                    def arrExePaths = params.EXECUTABLE_PATH.split(',')
-                    def arrImageNames = params.IMAGE_NAME.split(',')
-                    for(def i=0; i<arrImageNames.lenght;i++){
-                        def path = arrExePaths[i]
-                        def imagename = arrImageNames[i]
-                        steps {
+            steps {
+                script {
+                    if(IMAGE_NAME.contains(',')){
+                        def arrExePaths = params.EXECUTABLE_PATH.split(',')
+                        def arrImageNames = params.IMAGE_NAME.split(',')
+                        for(def i=0; i<arrImageNames.lenght;i++){
+                            def path = arrExePaths[i]
+                            def imagename = arrImageNames[i]
                             sh 'docker build -t ${imagename}:${VERSION} --build-arg argExecutablePath="${path}" -f Dockerfile-${imagename} .'
                             sh 'docker build -t ${imagename}:latest --build-arg argExecutablePath="${path}" -f Dockerfile-${imagename} .'                        
                         }
@@ -151,13 +151,13 @@ pipeline {
             }
         }
         stage ('push2Registry'){
-            script {
-                if(IMAGE_NAME.contains(',')){
-                    def arrExePaths = params.EXECUTABLE_PATH.split(',')
-                    def arrImageNames = params.IMAGE_NAME.split(',')
-                    for(def i=0; i<arrImageNames.lenght;i++){
-                        def imagename = arrImageNames[i]
-                        steps {
+            steps {
+                script {
+                    if(IMAGE_NAME.contains(',')){
+                        def arrExePaths = params.EXECUTABLE_PATH.split(',')
+                        def arrImageNames = params.IMAGE_NAME.split(',')
+                        for(def i=0; i<arrImageNames.lenght;i++){
+                            def imagename = arrImageNames[i]
                             sh 'docker tag ${imagename}:${VERSION} ${params.DOCKER_REGISTRY}/${imagename}:${VERSION}'
                             sh 'docker tag ${imagename}:latest ${params.DOCKER_REGISTRY}/${imagename}:${VERSION}'
                             sh 'docker push ${params.DOCKER_REGISTRY}/${imagename}:${VERSION}'
@@ -167,13 +167,13 @@ pipeline {
             }
         }
         stage ('save2file'){
-            script {
-                if(IMAGE_NAME.contains(',')){
-                    def arrExePaths = params.EXECUTABLE_PATH.split(',')
-                    def arrImageNames = params.IMAGE_NAME.split(',')
-                    for(def i=0; i<arrImageNames.lenght;i++){
-                        def imagename = arrImageNames[i]
-                        steps {
+            steps {
+                script {
+                    if(IMAGE_NAME.contains(',')){
+                        def arrExePaths = params.EXECUTABLE_PATH.split(',')
+                        def arrImageNames = params.IMAGE_NAME.split(',')
+                        for(def i=0; i<arrImageNames.lenght;i++){
+                            def imagename = arrImageNames[i]
                             sh 'docker save ${imagename}:${VERSION} -o ${imagename}_${VERSION}'
                             sh 'scp ${imagename}_${VERSION} ${FILE_REPO_SERVER}:/var/yansilar/${imagename}/${VERSION}/'
                             sh 'scp Dockerfile-${imagename} ${FILE_REPO_SERVER}:/var/yansilar/${imagename}/${VERSION}/'
