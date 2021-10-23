@@ -3,7 +3,7 @@
 pipeline {
 
     parameters { 
-        string(name: 'DOCKER_REGISTRY', defaultValue: '192.168.13.33:5000', description: 'Registry Adresi') 
+        string(name: 'DOCKER_REGISTRY', defaultValue: '192.168.55.11:5000', description: 'Registry Adresi') 
         string(name: 'IMAGE_NAME', defaultValue: 'cnramf-coremgr,cnramf-gtpmgr', description: 'Image isimleri') 
         string(name: 'EXECUTABLE_PATH', defaultValue: '/opt/cinar/cnramf-coremgr,/opt/cinar/cnramf-gtpmgr', description: 'Executable Pathler') 
     }
@@ -27,12 +27,6 @@ pipeline {
                 }
             }
         }
-        // önce dockerfile build edilir, sonra container "master:volume>agent_docker_container:volume" yaratılır 
-        // git clone -> masterdan paylaşılan volume içinde yapılır
-        // Her sh komutu agent_docker_container içinde çalışır
-        // make, test, deb build (xxx.deb), -> agent_docker_container
-        // docker build -> master jenkins içinde /volume/{xxx.deb, Dockerfile-artifact}
-        // docker build -t xxx_image -f Dockerfile-artifact .
         stage("Pre-Build Stage"){
             steps {
                 preBuild()
@@ -97,7 +91,7 @@ pipeline {
                 // sh 'echo "RUN curl https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/helloworld_1.0-1_amd64.deb --output ./helloworld_1.0-1_amd64.deb" >> Dockerfile'
                 sh 'echo "ADD https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/${IMAGE_NAME}_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb ./${IMAGE_NAME}_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb" >> Dockerfile'
                 sh 'echo "RUN apt-get install ./${IMAGE_NAME}_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb" >> Dockerfile'
-                sh 'echo "CMD ${EXECUTABLE_PATH}" >> Dockerfile'
+                sh 'echo "CMD ${argExecutablePath}" >> Dockerfile'
                 // sh '''echo -e "
                 // FROM ubuntu:xenial\n\
                 // USER root\n\
@@ -141,33 +135,51 @@ pipeline {
             }
         }
         stage ('build docker image'){
-            steps {
-                sh 'docker build -t ${params.IMAGE_NAME}:${VERSION} --build-arg argExecutablePath="${EXECUTABLE_PATH}" -f Dockerfile-${IMAGE_NAME} .'
-                sh 'docker build -t ${IMAGE_NAME}:latest --build-arg argExecutablePath="${EXECUTABLE_PATH}" -f Dockerfile-${IMAGE_NAME} .'
+            script {
+                if(IMAGE_NAME.contains(',')){
+                    def arrExePaths = params.EXECUTABLE_PATH.split(',')
+                    def arrImageNames = params.IMAGE_NAME.split(',')
+                    for(def i=0; i<arrImageNames.lenght;i++){
+                        def path = arrExePaths[i]
+                        def imagename = arrImageNames[i]
+                        steps {
+                            sh 'docker build -t ${imagename}:${VERSION} --build-arg argExecutablePath="${path}" -f Dockerfile-${imagename} .'
+                            sh 'docker build -t ${imagename}:latest --build-arg argExecutablePath="${path}" -f Dockerfile-${imagename} .'                        
+                        }
+                    }
+                }
             }
-            // if(IMAGE_NAME.contains(',')){
-            //     def arrExePaths = params.EXECUTABLE_PATH.split(',')
-            //     def arrImageNames = params.IMAGE_NAME.split(',')
-            //     for(def i=0; i<arrImageNames.lenght;i++){
-            //         def path = arrExePaths[i]
-            //         def imagename = arrImageNames[i]
-            //         sh 'docker build -t ${imagename}:${VERSION} --build-arg argExecutablePath="${path}" -f Dockerfile-${imagename} .'
-            //         sh 'docker build -t ${IMAGE_NAME}:latest --build-arg argExecutablePath="${path}" -f Dockerfile-${IMAGE_NAME} .'                        
-            //     }
-            // }
         }
         stage ('push2Registry'){
-            steps {
-                sh 'docker tag ${IMAGE_NAME}:${VERSION} ${params.DOCKER_REGISTRY}/${IMAGE_NAME}:${VERSION}'
-                sh 'docker tag ${IMAGE_NAME}:latest ${params.DOCKER_REGISTRY}/${IMAGE_NAME}:${VERSION}'
-                sh 'docker push ${params.DOCKER_REGISTRY}/${IMAGE_NAME}:${VERSION}'
+            script {
+                if(IMAGE_NAME.contains(',')){
+                    def arrExePaths = params.EXECUTABLE_PATH.split(',')
+                    def arrImageNames = params.IMAGE_NAME.split(',')
+                    for(def i=0; i<arrImageNames.lenght;i++){
+                        def imagename = arrImageNames[i]
+                        steps {
+                            sh 'docker tag ${imagename}:${VERSION} ${params.DOCKER_REGISTRY}/${imagename}:${VERSION}'
+                            sh 'docker tag ${imagename}:latest ${params.DOCKER_REGISTRY}/${imagename}:${VERSION}'
+                            sh 'docker push ${params.DOCKER_REGISTRY}/${imagename}:${VERSION}'
+                        }
+                    }
+                }
             }
         }
         stage ('save2file'){
-            steps {
-                sh 'docker save ${IMAGE_NAME}:${VERSION} -o ${IMAGE_NAME}_${VERSION}'
-                sh 'scp ${IMAGE_NAME}_${VERSION} ${FILE_REPO_SERVER}:/var/yansilar/${IMAGE_NAME}/${VERSION}/'
-                sh 'scp Dockerfile-${IMAGE_NAME} ${FILE_REPO_SERVER}:/var/yansilar/${IMAGE_NAME}/${VERSION}/'
+            script {
+                if(IMAGE_NAME.contains(',')){
+                    def arrExePaths = params.EXECUTABLE_PATH.split(',')
+                    def arrImageNames = params.IMAGE_NAME.split(',')
+                    for(def i=0; i<arrImageNames.lenght;i++){
+                        def imagename = arrImageNames[i]
+                        steps {
+                            sh 'docker save ${imagename}:${VERSION} -o ${imagename}_${VERSION}'
+                            sh 'scp ${imagename}_${VERSION} ${FILE_REPO_SERVER}:/var/yansilar/${imagename}/${VERSION}/'
+                            sh 'scp Dockerfile-${imagename} ${FILE_REPO_SERVER}:/var/yansilar/${imagename}/${VERSION}/'
+                        }
+                    }
+                }
             }
         }
     }
