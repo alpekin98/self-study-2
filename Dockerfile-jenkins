@@ -19,31 +19,29 @@ ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
 ENV CASC_JENKINS_CONFIG /var/jenkins_home/casc.yaml
 
 RUN touch /usr/share/jenkins/ref/plugins.txt
-RUN echo "
-ant:latest
-antisamy-markup-formatter:latest
-build-timeout:latest
-cloudbees-folder:latest
-configuration-as-code:latest
-credentials-binding:latest
-email-ext:latest
-git:latest
-github-branch-source:latest
-gradle:latest
-ldap:latest
-mailer:latest
-matrix-auth:latest
-pam-auth:latest
-pipeline-github-lib:latest
-pipeline-stage-view:latest
-ssh-slaves:latest
-timestamper:latest
-workflow-aggregator:latest
-ws-cleanup:latest
-job-dsl:latest
-docker-plugin:latest
-docker-workflow:latest
-" >> /usr/share/jenkins/ref/plugins.txt
+RUN echo 'ant:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'antisamy-markup-formatter:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'build-timeout:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'cloudbees-folder:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'configuration-as-code:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'credentials-binding:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'email-ext:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'git:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'github-branch-source:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'gradle:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'ldap:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'mailer:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'matrix-auth:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'pam-auth:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'pipeline-github-lib:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'pipeline-stage-view:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'ssh-slaves:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'timestamper:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'workflow-aggregator:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'ws-cleanup:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'job-dsl:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'docker-plugin:latest' >> /usr/share/jenkins/ref/plugins.txt
+    echo 'docker-workflow:latest' >> /usr/share/jenkins/ref/plugins.txt
 
 # # casc.yaml Dosyası ....
 # RUN echo -e '
