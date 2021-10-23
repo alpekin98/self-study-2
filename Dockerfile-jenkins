@@ -36,6 +36,7 @@ RUN echo 'ant:latest' >> /usr/share/jenkins/ref/plugins.txt && \
     echo 'workflow-aggregator:latest' >> /usr/share/jenkins/ref/plugins.txt && \
     echo 'job-dsl:latest' >> /usr/share/jenkins/ref/plugins.txt && \
     echo 'docker-plugin:latest' >> /usr/share/jenkins/ref/plugins.txt && \
+    echo 'docker-workflow:latest' >> /usr/share/jenkins/ref/plugins.txt && \
     echo 'ws-cleanup:latest' >> /usr/share/jenkins/ref/plugins.txt
 
 # # casc.yaml Dosyası ....
