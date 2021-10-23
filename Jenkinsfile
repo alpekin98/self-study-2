@@ -34,8 +34,16 @@ pipeline {
         }
         stage("Build"){
             steps {
-                echo "Build stage started."
-                sh "make --file=Makefile_debian build"
+                script {
+                    if(IMAGE_NAME.contains(',')){
+                        def arrImageNames = params.IMAGE_NAME.split(',')
+                        for(def i=0; i<arrImageNames.lenght;i++){
+                            def imagename = arrImageNames[i]
+                            echo 'Build stage started for Image: ${imagename}'
+                            sh 'make --file=Makefile_debian build IMAGE_NAME=${imagename}'
+                        }
+                    }
+                }
             }
         }
         stage("Post-Build Stage"){
@@ -68,8 +76,16 @@ pipeline {
         }
         stage("Dist Stage"){
             steps{
-                echo "packaging (debian)"
-                sh "make --file=Makefile_debian make_debian_package"
+                script {
+                    if(IMAGE_NAME.contains(',')){
+                        def arrImageNames = params.IMAGE_NAME.split(',')
+                        for(def i=0; i<arrImageNames.lenght;i++){
+                            def imagename = arrImageNames[i]
+                            echo 'packaging for Image:${imagename}'
+                            sh 'make --file=Makefile_debian make_debian_package IMAGE_NAME=${imagename} DEB_ARCHITECTURE=${DEB_ARCHITECTURE} REV_NUMBER=${REV_NUMBER} VERSION=${VERSION}'
+                        }
+                    }
+                }
             }
         }
         stage("Post-Dist Stage"){
@@ -79,19 +95,28 @@ pipeline {
         }
         stage("docker image"){
             steps{
-                echo "docker image"
                 sh 'docker --version'
-                sh 'rm -f Dockerfile'
-                sh 'touch Dockerfile'
-                sh 'echo "FROM ubuntu:xenial" >> Dockerfile'
-                sh 'echo "ARG argExecutablePath=${EXECUTABLE_PATH}" >> Dockerfile'
-                sh 'echo "USER root" >> Dockerfile'
-                sh 'echo "RUN apt-get update" >> Dockerfile' 
-                // sh 'echo "RUN apt-get install curl -y" >> Dockerfile' 
-                // sh 'echo "RUN curl https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/helloworld_1.0-1_amd64.deb --output ./helloworld_1.0-1_amd64.deb" >> Dockerfile'
-                sh 'echo "ADD https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/${IMAGE_NAME}_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb ./${IMAGE_NAME}_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb" >> Dockerfile'
-                sh 'echo "RUN apt-get install ./${IMAGE_NAME}_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb" >> Dockerfile'
-                sh 'echo "CMD ${argExecutablePath}" >> Dockerfile'
+                script {
+                    if(IMAGE_NAME.contains(',')){
+                        def arrExePaths = params.EXECUTABLE_PATH.split(',')
+                        def arrImageNames = params.IMAGE_NAME.split(',')
+                        for(def i=0; i<arrImageNames.lenght;i++){
+                            def path = arrExePaths[i]
+                            def imagename = arrImageNames[i]
+                            echo 'docker image: ${imagename}'
+                            sh 'rm -f Dockerfile-${imagename}'
+                            sh 'touch Dockerfile-${imagename}'
+                            sh 'echo "FROM ubuntu:xenial" >> Dockerfile-${imagename}'
+                            sh 'echo "USER root" >> Dockerfile-${imagename}'
+                            sh 'echo "RUN apt-get update" >> Dockerfile-${imagename}' 
+                            sh 'echo "ADD https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/${imagename}_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb ./${imagename}_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb" >> Dockerfile-${imagename}'
+                            sh 'echo "RUN apt-get install ./${imagename}_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb" >> Dockerfile-${imagename}'
+                            sh 'echo "CMD ${path}" >> Dockerfile-${imagename}'
+                        }
+                    }
+                    // sh 'echo "RUN apt-get install curl -y" >> Dockerfile' 
+                    // sh 'echo "RUN curl https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/helloworld_1.0-1_amd64.deb --output ./helloworld_1.0-1_amd64.deb" >> Dockerfile'
+                }
                 // sh '''echo -e "
                 // FROM ubuntu:xenial\n\
                 // USER root\n\
@@ -154,7 +179,6 @@ pipeline {
             steps {
                 script {
                     if(IMAGE_NAME.contains(',')){
-                        def arrExePaths = params.EXECUTABLE_PATH.split(',')
                         def arrImageNames = params.IMAGE_NAME.split(',')
                         for(def i=0; i<arrImageNames.lenght;i++){
                             def imagename = arrImageNames[i]
@@ -170,7 +194,6 @@ pipeline {
             steps {
                 script {
                     if(IMAGE_NAME.contains(',')){
-                        def arrExePaths = params.EXECUTABLE_PATH.split(',')
                         def arrImageNames = params.IMAGE_NAME.split(',')
                         for(def i=0; i<arrImageNames.lenght;i++){
                             def imagename = arrImageNames[i]

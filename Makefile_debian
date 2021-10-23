@@ -15,7 +15,7 @@ clean:
 # TODO parametrik dosya ismi
 
 make_debian_package:
-	make --file=Makefile_debian build
+	make --file=Makefile_debian build IMAGE_NAME=$(IMAGE_NAME)
 	rm -rf $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}
 	mkdir -p $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}/usr/local/bin
 	cp $(IMAGE_NAME) $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}/usr/local/bin
@@ -27,7 +27,7 @@ make_debian_package:
 	echo 'Maintainer: Arinc Alp Eren <arinc.alp.98@gmail.com>' >> $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}/DEBIAN/control
 	echo 'Description: A program that greets you.' >> $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}/DEBIAN/control
 	fakeroot dpkg-deb --build $(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}
-	make --file=Makefile_debian clean
+	make --file=Makefile_debian clean IMAGE_NAME=$(IMAGE_NAME) DEB_ARCHITECTURE=$(DEB_ARCHITECTURE) REV_NUMBER=$(REV_NUMBER) VERSION=$(VERSION)
 	curl -u arinc.alp.98@gmail.com:AP7y8ekbLckRdzX7RZYYFbU717x -XPUT "https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/$(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb;deb.distribution=latest;deb.component=main;deb.architecture=_${DEB_ARCHITECTURE}" -T ./$(IMAGE_NAME)_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb
 
 test:
