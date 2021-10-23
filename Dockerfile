@@ -4,10 +4,10 @@ USER root
 LABEL version="1.0"
 LABEL Name="main-docker-agent"
 
-ARG VERSION = "1.0"
-ARG REV_NUMBER = "1"
-ARG DEB_ARCHITECTURE = "amd64"
-ARG FILE_REPO_SERVER = "TODO"
+ARG VERSION = 1.0
+ARG REV_NUMBER = 1
+ARG DEB_ARCHITECTURE = amd64
+ARG FILE_REPO_SERVER = TODO
 
 RUN apt update
 RUN apt install -y  gcc\
