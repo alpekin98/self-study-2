@@ -6,6 +6,10 @@ pipeline {
         string(name: 'DOCKER_REGISTRY', defaultValue: '192.168.55.11:5000', description: 'Registry Adresi') 
         string(name: 'IMAGE_NAME', defaultValue: 'cnramf-coremgr,cnramf-gtpmgr', description: 'Image isimleri') 
         string(name: 'EXECUTABLE_PATH', defaultValue: '/opt/cinar/cnramf-coremgr,/opt/cinar/cnramf-gtpmgr', description: 'Executable Pathler') 
+        string(name: 'VERSION', defaultValue: '1.0', description: 'Version Number') 
+        string(name: 'REV_NUMBER', defaultValue: '1', description: 'Revision Number') 
+        string(name: 'DEB_ARCHITECTURE', defaultValue: 'amd64', description: 'Debin Architecture') 
+        string(name: 'FILE_REPO_SERVER', defaultValue: 'TODO', description: 'Repository Server Name') 
     }
     
     agent {
@@ -82,7 +86,7 @@ pipeline {
                         for(def i=0; i<arrImageNames.lenght;i++){
                             def imagename = arrImageNames[i]
                             echo 'packaging for Image:${imagename}'
-                            sh 'make --file=Makefile_debian make_debian_package IMAGE_NAME=${imagename} DEB_ARCHITECTURE=${DEB_ARCHITECTURE} REV_NUMBER=${REV_NUMBER} VERSION=${VERSION}'
+                            sh 'make --file=Makefile_debian make_debian_package IMAGE_NAME=${imagename} DEB_ARCHITECTURE=${params.DEB_ARCHITECTURE} REV_NUMBER=${params.REV_NUMBER} VERSION=${params.VERSION}'
                         }
                     }
                 }
@@ -109,8 +113,8 @@ pipeline {
                             sh 'echo "FROM ubuntu:xenial" >> Dockerfile-${imagename}'
                             sh 'echo "USER root" >> Dockerfile-${imagename}'
                             sh 'echo "RUN apt-get update" >> Dockerfile-${imagename}' 
-                            sh 'echo "ADD https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/${imagename}_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb ./${imagename}_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb" >> Dockerfile-${imagename}'
-                            sh 'echo "RUN apt-get install ./${imagename}_${VERSION}-${REV_NUMBER}_${DEB_ARCHITECTURE}.deb" >> Dockerfile-${imagename}'
+                            sh 'echo "ADD https://alpekin98.jfrog.io/artifactory/my-test-debian/pool/${imagename}_${params.VERSION}-${params.REV_NUMBER}_${params.DEB_ARCHITECTURE}.deb ./${imagename}_${params.VERSION}-${params.REV_NUMBER}_${params.DEB_ARCHITECTURE}.deb" >> Dockerfile-${imagename}'
+                            sh 'echo "RUN apt-get install ./${imagename}_${params.VERSION}-${params.REV_NUMBER}_${params.DEB_ARCHITECTURE}.deb" >> Dockerfile-${imagename}'
                             sh 'echo "CMD ${path}" >> Dockerfile-${imagename}'
                         }
                     }
@@ -168,7 +172,7 @@ pipeline {
                         for(def i=0; i<arrImageNames.lenght;i++){
                             def path = arrExePaths[i]
                             def imagename = arrImageNames[i]
-                            sh 'docker build -t ${imagename}:${VERSION} --build-arg argExecutablePath="${path}" -f Dockerfile-${imagename} .'
+                            sh 'docker build -t ${imagename}:${params.VERSION} --build-arg argExecutablePath="${path}" -f Dockerfile-${imagename} .'
                             sh 'docker build -t ${imagename}:latest --build-arg argExecutablePath="${path}" -f Dockerfile-${imagename} .'                        
                         }
                     }
@@ -182,9 +186,9 @@ pipeline {
                         def arrImageNames = params.IMAGE_NAME.split(',')
                         for(def i=0; i<arrImageNames.lenght;i++){
                             def imagename = arrImageNames[i]
-                            sh 'docker tag ${imagename}:${VERSION} ${params.DOCKER_REGISTRY}/${imagename}:${VERSION}'
-                            sh 'docker tag ${imagename}:latest ${params.DOCKER_REGISTRY}/${imagename}:${VERSION}'
-                            sh 'docker push ${params.DOCKER_REGISTRY}/${imagename}:${VERSION}'
+                            sh 'docker tag ${imagename}:${params.VERSION} ${params.DOCKER_REGISTRY}/${imagename}:${params.VERSION}'
+                            sh 'docker tag ${imagename}:latest ${params.DOCKER_REGISTRY}/${imagename}:${params.VERSION}'
+                            sh 'docker push ${params.DOCKER_REGISTRY}/${imagename}:${params.VERSION}'
                         }
                     }
                 }
@@ -197,9 +201,9 @@ pipeline {
                         def arrImageNames = params.IMAGE_NAME.split(',')
                         for(def i=0; i<arrImageNames.lenght;i++){
                             def imagename = arrImageNames[i]
-                            sh 'docker save ${imagename}:${VERSION} -o ${imagename}_${VERSION}'
-                            sh 'scp ${imagename}_${VERSION} ${FILE_REPO_SERVER}:/var/yansilar/${imagename}/${VERSION}/'
-                            sh 'scp Dockerfile-${imagename} ${FILE_REPO_SERVER}:/var/yansilar/${imagename}/${VERSION}/'
+                            sh 'docker save ${imagename}:${params.VERSION} -o ${imagename}_${params.VERSION}'
+                            sh 'scp ${imagename}_${params.VERSION} ${params.FILE_REPO_SERVER}:/var/yansilar/${imagename}/${params.VERSION}/'
+                            sh 'scp Dockerfile-${imagename} ${params.FILE_REPO_SERVER}:/var/yansilar/${imagename}/${params.VERSION}/'
                         }
                     }
                 }
