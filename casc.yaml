@@ -16,6 +16,9 @@ unclassified:
             scm:
               git:
                 remote: "https://github.com/alpekin98/jenkins-shared-library-sample"
+  themeManager:
+    disableUserThemes: true
+    theme: "darkSystem" # use 'dark' for forcing the dark theme regardless of OS settings
 jobs:
   - script: >
       pipelineJob('self-study-cpp') {
