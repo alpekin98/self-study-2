@@ -41,7 +41,7 @@ pipeline {
                 script {
                     if(IMAGE_NAME.contains(',')){
                         def arrImageNames = params.IMAGE_NAME.split(',')
-                        for(def i=0; i<arrImageNames.lenght;i++){
+                        for(def i=0; i<arrImageNames.length;i++){
                             def imagename = arrImageNames[i]
                             echo 'Build stage started for Image: ${imagename}'
                             sh 'make --file=Makefile_debian build IMAGE_NAME=${imagename}'
@@ -83,7 +83,7 @@ pipeline {
                 script {
                     if(IMAGE_NAME.contains(',')){
                         def arrImageNames = params.IMAGE_NAME.split(',')
-                        for(def i=0; i<arrImageNames.lenght;i++){
+                        for(def i=0; i<arrImageNames.length;i++){
                             def imagename = arrImageNames[i]
                             echo 'packaging for Image:${imagename}'
                             sh 'make --file=Makefile_debian make_debian_package IMAGE_NAME=${imagename} DEB_ARCHITECTURE=${params.DEB_ARCHITECTURE} REV_NUMBER=${params.REV_NUMBER} VERSION=${params.VERSION}'
@@ -104,7 +104,7 @@ pipeline {
                     if(IMAGE_NAME.contains(',')){
                         def arrExePaths = params.EXECUTABLE_PATH.split(',')
                         def arrImageNames = params.IMAGE_NAME.split(',')
-                        for(def i=0; i<arrImageNames.lenght;i++){
+                        for(def i=0; i<arrImageNames.length;i++){
                             def path = arrExePaths[i]
                             def imagename = arrImageNames[i]
                             echo 'docker image: ${imagename}'
@@ -169,7 +169,7 @@ pipeline {
                     if(IMAGE_NAME.contains(',')){
                         def arrExePaths = params.EXECUTABLE_PATH.split(',')
                         def arrImageNames = params.IMAGE_NAME.split(',')
-                        for(def i=0; i<arrImageNames.lenght;i++){
+                        for(def i=0; i<arrImageNames.length;i++){
                             def path = arrExePaths[i]
                             def imagename = arrImageNames[i]
                             sh 'docker build -t ${imagename}:${params.VERSION} --build-arg argExecutablePath="${path}" -f Dockerfile-${imagename} .'
@@ -184,7 +184,7 @@ pipeline {
                 script {
                     if(IMAGE_NAME.contains(',')){
                         def arrImageNames = params.IMAGE_NAME.split(',')
-                        for(def i=0; i<arrImageNames.lenght;i++){
+                        for(def i=0; i<arrImageNames.length;i++){
                             def imagename = arrImageNames[i]
                             sh 'docker tag ${imagename}:${params.VERSION} ${params.DOCKER_REGISTRY}/${imagename}:${params.VERSION}'
                             sh 'docker tag ${imagename}:latest ${params.DOCKER_REGISTRY}/${imagename}:${params.VERSION}'
@@ -199,7 +199,7 @@ pipeline {
                 script {
                     if(IMAGE_NAME.contains(',')){
                         def arrImageNames = params.IMAGE_NAME.split(',')
-                        for(def i=0; i<arrImageNames.lenght;i++){
+                        for(def i=0; i<arrImageNames.length;i++){
                             def imagename = arrImageNames[i]
                             sh 'docker save ${imagename}:${params.VERSION} -o ${imagename}_${params.VERSION}'
                             sh 'scp ${imagename}_${params.VERSION} ${params.FILE_REPO_SERVER}:/var/yansilar/${imagename}/${params.VERSION}/'
