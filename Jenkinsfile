@@ -2,11 +2,11 @@
 
 pipeline {
 
-    // parameters { 
-    //     string(name: 'DOCKER_REGISTRY', defaultValue: '192.168.55.11:5000', description: 'Registry Adresi') 
-    //     string(name: 'IMAGE_NAME', defaultValue: 'cnramf-coremgr,cnramf-gtpmgr', description: 'Image isimleri') 
-    //     string(name: 'EXECUTABLE_PATH', defaultValue: '/opt/cinar/cnramf-coremgr,/opt/cinar/cnramf-gtpmgr', description: 'Executable Pathler') 
-    // }
+    parameters { 
+        string(name: 'DOCKER_REGISTRY', defaultValue: '192.168.55.11:5000', description: 'Registry Adresi') 
+        string(name: 'IMAGE_NAME', defaultValue: 'cnramf-coremgr,cnramf-gtpmgr', description: 'Image isimleri') 
+        string(name: 'EXECUTABLE_PATH', defaultValue: '/opt/cinar/cnramf-coremgr,/opt/cinar/cnramf-gtpmgr', description: 'Executable Pathler') 
+    }
     
     agent {
         dockerfile {
