@@ -172,8 +172,8 @@ pipeline {
                         for(def i=0; i<arrImageNames.length;i++){
                             def path = arrExePaths[i]
                             def imagename = arrImageNames[i]
-                            sh "docker build -t ${imagename}:${params.VERSION} -f Dockerfile-${imagename} ."
-                            sh "docker build -t ${imagename}:latest -f Dockerfile-${imagename} ."                        
+                            sh "docker build -t ${imagename}:${params.VERSION} -f Dockerfile-${imagename} . --no-cache"
+                            sh "docker build -t ${imagename}:latest -f Dockerfile-${imagename} . --no-cache"
                         }
                     }
                 }
