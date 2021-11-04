@@ -9,7 +9,7 @@ pipeline {
         string(name: 'VERSION', defaultValue: '1.0', description: 'Version Number') 
         string(name: 'REV_NUMBER', defaultValue: '1', description: 'Revision Number') 
         string(name: 'DEB_ARCHITECTURE', defaultValue: 'amd64', description: 'Debin Architecture') 
-        string(name: 'FILE_REPO_SERVER', defaultValue: 'TODO', description: 'Repository Server Name') 
+        string(name: 'FILE_REPO_SERVER', defaultValue: '192.168.55.11:5000', description: 'Repository Server Name') 
     }
     
     agent {
